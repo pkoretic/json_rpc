@@ -1,0 +1,30 @@
+{
+  "name": "json-rpc-client",
+  "description": "Very fast and lightweight persistent JSON RPC 2.0 client implementation over TCP and Unix socket",
+  "author": "Petar Koretic <petar.koretic@gmail.com>",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pkoretic/json_rpc.git"
+  },
+  "engine": "node 0.10.x",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pkoretic/json_rpc/issues"
+  },
+  "homepage": "https://github.com/pkoretic/json_rpc",
+  "main": "lib/jsonrpc.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jsonrpc",
+    "client"
+  ]
+}
