@@ -13,6 +13,7 @@ var client = jsonrpc({ port: 7070, host: '127.0.0.1'}, function(error)
         console.log(reply)
     })
 
+    // simulate later action
     setTimeout(function()
     {
         console.log("sending")
@@ -31,7 +32,7 @@ var client = jsonrpc({ port: 7070, host: '127.0.0.1'}, function(error)
     // non-existing method
     client.send('error', {"param1" : 4, "param2" : 2}, function(reply)
     {
-        // reply.error
+        // reply.error will contain error message
         console.log(reply)
     })
 })
@@ -42,6 +43,7 @@ client.on('error', function(error)
     console.log(error)
 })
 
+// catch close event
 client.on('close', function()
 {
     console.log('close called')
@@ -57,5 +59,4 @@ var client2 = jsonrpc({ port: 7070, host: '127.0.0.1'}, function(error)
     {
         console.log(reply)
     })
-
 })
