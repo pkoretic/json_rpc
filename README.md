@@ -4,7 +4,7 @@ json-rpc client
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/pkoretic/json-rpc-client/blob/master/LICENSE)  
 [![NPM](https://nodei.co/npm/json-rpc-client.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/json-rpc-client/)
 
-JSON-RPC 2.0 TCP implementation with persistent connections - very fast and without dependencies
+JSON-RPC 2.0 TCP implementation with persistent connections using promises - very fast and without dependencies
 
 ## Installation
 
