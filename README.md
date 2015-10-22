@@ -11,85 +11,60 @@ JSON-RPC 2.0 TCP implementation with persistent connections - very fast and with
     npm install json-rpc-client
 
 ## Example usage
-    var jsonrpc = require('./jsonrpc')
+    var jsonrpc = require('json-rpc-client')
 
     // create client and connect
-    var client = jsonrpc({ port: 7070, host: '127.0.0.1'}, function(error)
+    var client = new jsonrpc({ port: 7070, host: '127.0.0.1'})
+    client.connect().then(function()
     {
-        // check if connection failed
-        if (error)
-            return console.log(error)
-
-        client.send('method', {"param1" : 4, "param2" : 2}, function(reply)
+        // send json rpc
+        client.send('add', [1,2]).then(function(reply)
         {
             // print complete reply
             console.log(reply)
-        })
-
-        setTimeout(function()
+        },
+        //transport errors
+        function(error)
         {
-            console.log("sending")
-            client.send('method', {"param1" : 1, "param2" : 4}, function(reply)
-            {
-                // explicitly check for error in reply
-                if (!reply.error)
-                    console.log(reply.result)
-            })
-        }, 6000)
-
-        // skip callback to make notification
-        client.send('method', {"param1" : 2, "param2" : 5})
-        client.send('method', {"param1" : 4, "param2" : 8})
-
-        // non-existing method
-        client.send('error', {"param1" : 4, "param2" : 2}, function(reply)
-        {
-            // reply.error
-            console.log(reply)
+            console.error(error)
         })
-    })
-
-    // catch generic errors
-    client.on('error', function(error)
+    },
+    function(error)
     {
-        console.log(error)
-    })
-
-    client.on('close', function()
-    {
-        console.log('close called')
+        console.error(error)
     })
 
 ## API
 
     var jsonrpc = require('./jsonrpc')
 
-### jsonrpc (options, callback)
+### jsonrpc (options)
 
-Creates a new RPC connection to the server.
+Creates a new RPC connection object.
 
 Options:
 
 * host: Host the client should connect to. Defaults to '127.0.0.1'.
 * port: Port the client should connect to. Defaults to '7070'.
 
-Callback: Invoked after the connection to the specified host is ready
+### connect
+Returns promise which resolves after the connection to the specified host is ready
 
-### send (methodName, parameters, callback)
+### send (methodName, parameters, notification)
 
 Sends json data through persisted tcp connection.
 
 methodName: string
 
-parameters: Object with parameters
+parameters: Object/Array with parameters
 
-Callback:
+notification: true/false to make notification request (no reply)
 
-* reply - object containing reply data along with error
+* Promise - object containing reply data along with error
 
-### close (callback)
+### close
 
-Closes RPC connection and returns callback afterwards.
+Closes RPC connection and returns promise afterwards.
 
 ### Event 'error'
 * 'Error Object'
