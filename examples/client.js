@@ -1,43 +1,59 @@
-var jsonrpc = require('./jsonrpc')
+var jsonrpc = require('../')
 
 // create client and connect
-var client = jsonrpc({ port: 7070, host: '127.0.0.1'}, function(error)
-{
-    // check if connection failed
-    if (error)
-        return console.log(error)
+var client = new jsonrpc({ port: 7070, host: '127.0.0.1'})
 
-    client.send('method', {"param1" : 4, "param2" : 2}, function(reply)
+client.connect().then(function()
+{
+    console.log("sending 'add'")
+    client.send('add', [1,2]).then(function(reply)
     {
         // print complete reply
-        console.log(reply)
+        console.log("'add' reply:", reply)
+    },
+    // transport errors
+    function(error)
+    {
+        console.log("'add' error:", error)
     })
 
     // simulate later action
     setTimeout(function()
     {
-        console.log("sending")
-        client.send('method', {"param1" : 1, "param2" : 4}, function(reply)
+        console.log("sending 'params'")
+        client.send('params', {"param1" : 1, "param2" : 4}).then(function(reply)
         {
-            // explicitly check for error in reply
+            // explicitly check for server errors in reply
             if (!reply.error)
-                console.log(reply.result)
+                console.log("'params' reply result:", reply.result)
+        },
+        function(error)
+        {
+            console.log("'params' error:", error)
         })
     }, 6000)
 
-    // skip callback to make notification
-    client.send('method', {"param1" : 2, "param2" : 5})
-    client.send('method', {"param1" : 4, "param2" : 8})
+    // add 'true' as last argument to make notification, also returns promise
+    client.send('hello', { date: +new Date() }, true)
 
     // non-existing method
-    client.send('error', {"param1" : 4, "param2" : 2}, function(reply)
+    client.send('error', {"param1" : 4, "param2" : 2}).then(function(reply)
     {
         // reply.error will contain error message
         console.log(reply)
+    },
+    function(error)
+    {
+        console.log("'error' error:", error)
     })
+},
+// connect error
+function(error)
+{
+    console.error(error)
 })
 
-// catch generic errors
+// catch generic errors for client
 client.on('error', function(error)
 {
     console.log(error)
@@ -50,13 +66,19 @@ client.on('close', function()
 })
 
 // create second client
-var client2 = jsonrpc({ port: 7070, host: '127.0.0.1'}, function(error)
-{
-    if (error)
-        return console.log(error)
-
-    client2.send('method', {"param1" : 6, "param2" : 5}, function(reply)
-    {
-        console.log(reply)
-    })
-})
+//var client2 = new jsonrpc({ port: 7070, host: '127.0.0.1'})
+//client2.connect().then(function()
+//{
+//    client2.send('add', [3,5]).then(function(reply)
+//    {
+//        console.log("second client reply:", reply)
+//    },
+//    function(error)
+//    {
+//        console.error("second client send error", error)
+//    })
+//},
+//function(error)
+//{
+//    console.log("second client connection failed:", error)
+//})
