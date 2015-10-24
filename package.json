@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git@github.com:pkoretic/json_rpc.git"
   },
-  "engine": "node 0.10.x",
+  "engine": "node 4.2.x",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pkoretic/json_rpc/issues"
