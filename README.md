@@ -74,6 +74,7 @@ Options:
 
 * host: Host the client should connect to. Defaults to '127.0.0.1'.
 * port: Port the client should connect to. Defaults to '7070'.
+* keepalive [optional]: if set, keepalive will set using [net-keepalive](https://github.com/hertzg/node-net-keepalive)
 
 ### connect
 Returns promise which resolves after the connection to the specified host is ready
