@@ -11,6 +11,8 @@ JSON-RPC 2.0 TCP implementation with persistent connections using promises - ver
     npm install json-rpc-client
 
 ## Example usage
+### Native promise
+
     var jsonrpc = require('json-rpc-client')
 
     // create client and connect
@@ -33,6 +35,28 @@ JSON-RPC 2.0 TCP implementation with persistent connections using promises - ver
     {
         console.error(error)
     })
+
+### Generators (using co)
+
+    var jsonrpc = require('json-rpc-client')
+
+    // create client and connect
+    var client = new jsonrpc({ port: 7070, host: '127.0.0.1'})
+
+    try
+    {
+        yield client.connect()
+
+        // send json rpc
+        var reply = yield client.send('add', [1,2])
+
+        // print complete reply
+        console.log(reply)
+    }
+    catch(error)
+    {
+        console.error(error)
+    }
 
 ## API
 
