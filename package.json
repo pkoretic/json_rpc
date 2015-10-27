@@ -2,7 +2,7 @@
   "name": "json-rpc-client",
   "description": "Very fast and lightweight persistent promise JSON RPC 2.0 client implementation over TCP and Unix socket",
   "author": "Petar Koretic <petar.koretic@gmail.com>",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": {
     "type": "git",
     "url": "git@github.com:pkoretic/json_rpc.git"
